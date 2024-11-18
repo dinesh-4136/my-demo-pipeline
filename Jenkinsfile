@@ -12,13 +12,9 @@ pipeline  {
         }
       }
     }
-    stage("clean")  {
-      steps  {
-        post  {
-          always  {
-            cleanWs()
-          }
-        }
+    post  {
+      always  {
+        cleanWs()
       }
     }
     stage("run backend")  {
