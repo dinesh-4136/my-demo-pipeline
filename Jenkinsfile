@@ -19,5 +19,10 @@ pipeline  {
           sh './gradlew -v'
         }
     }
+    post { 
+        always { 
+            cleanWs()
+        }
+    }
   }
 }
