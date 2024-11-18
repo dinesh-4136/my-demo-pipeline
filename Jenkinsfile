@@ -1,28 +1,43 @@
-pipeline  {
+def gv
+pipeline	{
   agent any
-  tools  {
-    gradle 'Gradle-8.11'
-  }
-  stages  {
-    stage("run frontend")  {
-      steps  {
-        echo 'executing yarn...'
-        nodejs('NodeJS-23.2')  {
-          sh 'yarn install'
-        }
-      }
-    }
-    stage("run backend")  {
-      steps  {
-        sh 'gradle init'
-        echo 'executing gradle...'
-          sh './gradlew -v'
-        }
-    }
-  }
-  post { 
-        always { 
-            cleanWs()
-        }
-    }
+	parameters	{
+	  choice(name: VERSION, choices: ['1.1.0', '1.2.0', '1.3.0'], description" '')
+		booleanParam(name: 'ececuteTests', defaultValue: true, description)
+	}
+	stages	{
+	  stage("init")	{
+		  steps	{
+			  script	{
+				  gv = load "script.groovy"
+				}
+			}
+		}
+		stage("build")	{
+		  steps	{
+			  script	{
+				  gv.buildApp"
+				}
+			}
+		}
+		stage("test")	{
+		  when	{
+			  expression	{
+				  params.executeTests
+				}
+			}
+			steps	{
+			  script	{
+				  gv.testApp"
+			  }
+		  }
+	  }
+		stage("deploy")	{
+		  steps	{
+			  script	{
+				  gv.deployApp"
+				}
+			}
+		}
+	}
 }
