@@ -12,6 +12,14 @@ pipeline  {
         }
       }
     }
+    stage("clean")  {
+      steps  {
+        post  {
+          always  {
+            cleanWs()
+          }
+        }
+      }
     stage("run backend")  {
       steps  {
         sh 'gradle init'
