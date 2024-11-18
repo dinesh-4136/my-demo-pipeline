@@ -20,6 +20,7 @@ pipeline  {
           }
         }
       }
+    }
     stage("run backend")  {
       steps  {
         sh 'gradle init'
