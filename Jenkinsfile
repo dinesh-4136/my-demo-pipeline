@@ -12,17 +12,14 @@ pipeline  {
         }
       }
     }
-    post  {
-      always  {
-        cleanWs()
-      }
-    }
     stage("run backend")  {
       steps  {
         sh 'gradle init'
         echo 'executing gradle...'
-          sh './gradlew -v'
+        withGradle {
+          sh 'gradle wrapper build'
         }
+      }
     }
   }
 }
